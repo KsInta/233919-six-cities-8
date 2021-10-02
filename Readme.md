@@ -1,7 +1,7 @@
 # Личный проект «Шесть городов»
 
 * Студент: [Виталий Житник](https://up.htmlacademy.ru/react/8/user/233919).
-* Наставник: `Неизвестно`.
+* Наставник: [Михаил Кислый](https://htmlacademy.ru/profile/smart-grizzly).
 
 ---
 
