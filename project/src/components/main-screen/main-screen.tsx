@@ -1,9 +1,6 @@
 import CityComponent from '../city-component/city-component';
 import OfferComponent from '../offer-component/offer-component';
-
-type MainScreenProps = {
-  offersCount: number;
-}
+import {MainScreenProps} from './type';
 
 function MainScreen({offersCount}: MainScreenProps): JSX.Element {
   return (

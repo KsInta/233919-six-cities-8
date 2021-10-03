@@ -1,6 +1,4 @@
-type CityComponentProps = {
-  city: string;
-}
+import {CityComponentProps} from './type';
 
 function CityComponent({city}: CityComponentProps): JSX.Element {
   return (
