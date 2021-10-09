@@ -1,11 +1,12 @@
 import {CityComponentProps} from './type';
+import {Link} from 'react-router-dom';
 
 function CityComponent({city}: CityComponentProps): JSX.Element {
   return (
     <li className="locations__item">
-      <a className="locations__item-link tabs__item" href="#">
+      <Link className="locations__item-link tabs__item" to="/">
         <span>{city}</span>
-      </a>
+      </Link>
     </li>
   );
 }
