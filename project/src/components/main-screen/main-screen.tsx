@@ -1,9 +1,10 @@
 import CityComponent from '../city-component/city-component';
 import Logo from '../logo/logo';
-import OfferComponent from '../offer-component/offer-component';
+import OffersListComponent from '../offers-list-component/offers-list-component';
 import {MainScreenProps} from './type';
 
-function MainScreen({offersCount}: MainScreenProps): JSX.Element {
+function MainScreen(props: MainScreenProps): JSX.Element {
+  const {offersCount, offers} = props;
   return (
     <div className="page page--gray">
       <header className="header">
@@ -50,11 +51,7 @@ function MainScreen({offersCount}: MainScreenProps): JSX.Element {
                 </ul>
               </form>
               <div className="cities__places-list places__list tabs__content">
-                <OfferComponent />
-                <OfferComponent />
-                <OfferComponent />
-                <OfferComponent />
-                <OfferComponent />
+                <OffersListComponent offers={offers} />
               </div>
             </section>
             <div className="cities__right-section">

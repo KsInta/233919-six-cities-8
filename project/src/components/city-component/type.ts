@@ -1,5 +1,5 @@
 type CityComponentProps = {
-  city: string;
+  city: string,
 }
 
 export type {CityComponentProps};
