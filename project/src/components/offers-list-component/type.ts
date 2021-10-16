@@ -1,7 +1,7 @@
 import {Offers} from '../../types/types';
 
 type OffersListProps = {
-  offers: Offers;
+  offers: Offers,
 }
 
 export type {OffersListProps};

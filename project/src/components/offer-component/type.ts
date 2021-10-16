@@ -1,7 +1,7 @@
 import {Offer} from '../../types/types';
 
 type OfferComponentyProps = {
-  offer: Offer;
+  offer: Offer,
 };
 
 export type {OfferComponentyProps};

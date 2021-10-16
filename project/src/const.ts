@@ -3,6 +3,7 @@ const enum AppRoute {
   Login = '/login',
   Main = '/',
   Room = '/room/',
+  RoomId = '/room/:id'
 }
 
 const enum AuthorizationStatus {

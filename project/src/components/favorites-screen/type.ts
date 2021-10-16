@@ -1,7 +1,7 @@
 import {Offers} from '../../types/types';
 
 type FavoritesScreenProps = {
-  offers: Offers;
+  offers: Offers,
 }
 
 export type {FavoritesScreenProps};

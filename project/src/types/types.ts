@@ -14,9 +14,9 @@ type Comment = {
 }
 
 type Host = {
-  avatarUrl: string;
-  isPro: boolean;
-  name: string;
+  avatarUrl: string,
+  isPro: boolean,
+  name: string,
 };
 
 type Location = {
@@ -26,27 +26,27 @@ type Location = {
 }
 
 type City = {
-  location: Location
+  location: Location,
   name: string,
 }
 
 type Offer = {
-  bedrooms: number;
-  description: string;
-  goods: string[];
-  host: Host;
-  location: Location;
-  city: City;
-  id: number;
-  images: string[];
-  isFavorite: boolean;
-  isPremium: boolean;
-  maxAdults: number;
-  previewImage: string;
-  price: number;
-  rating: number;
-  title: string;
-  type: string;
+  bedrooms: number,
+  description: string,
+  goods: string[],
+  host: Host,
+  location: Location,
+  city: City,
+  id: number,
+  images: string[],
+  isFavorite: boolean,
+  isPremium: boolean,
+  maxAdults: number,
+  previewImage: string,
+  price: number,
+  rating: number,
+  title: string,
+  type: string,
 };
 
 type Comments = Comment[];

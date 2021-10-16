@@ -21,7 +21,7 @@ function App({offersCount, offers, comments}: AppScreenProps): JSX.Element {
         <Route path={AppRoute.Login} exact>
           <SignInScreen />
         </Route>
-        <Route path={`${AppRoute.Room}:id`} exact>
+        <Route path={AppRoute.RoomId} exact>
           <RoomScreen
             offers={offers}
             comments={comments}
