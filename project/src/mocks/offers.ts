@@ -1,4 +1,12 @@
-import {Offers} from '../types/types';
+import {Offers, City} from '../types/types';
+
+const CITY: City = {
+  location: {
+    latitude: 52.370216,
+    longitude: 4.895168,
+    zoom: 10},
+  name: 'Amsterdam',
+};
 
 const offers: Offers = [
   {
@@ -19,8 +27,8 @@ const offers: Offers = [
       name: 'Amsterdam',
     },
     location: {
-      latitude: 52.35514938496378,
-      longitude: 4.673877537499948,
+      latitude: 52.3909553943508,
+      longitude: 4.85309666406198,
       zoom: 8,
     },
     id: 1,
@@ -52,8 +60,8 @@ const offers: Offers = [
       name: 'Amsterdam',
     },
     location: {
-      latitude: 52.35514938496378,
-      longitude: 4.673877537499948,
+      latitude: 52.369553943508,
+      longitude: 4.85309666406198,
       zoom: 8,
     },
     id: 2,
@@ -69,7 +77,7 @@ const offers: Offers = [
   },
   {
     bedrooms: 4,
-    description: 'A quiet cozy and picturesque that hides behind Cologne',
+    description: 'A quiet cozy and picturesque that hides behind Amsterdam',
     goods: ['Heating', 'Kitchen', 'Cable TV', 'Washing machine', 'Coffee machine', 'Dishwasher'],
     host:
       {
@@ -82,11 +90,11 @@ const offers: Offers = [
         latitude: 52.370216,
         longitude: 4.895168,
         zoom: 10},
-      name: 'Cologne',
+      name: 'Amsterdam',
     },
     location: {
-      latitude: 52.35514938496378,
-      longitude: 4.673877537499948,
+      latitude: 52.3909553943508,
+      longitude: 4.929309666406198,
       zoom: 8,
     },
     id: 3,
@@ -102,7 +110,7 @@ const offers: Offers = [
   },
   {
     bedrooms: 1,
-    description: 'Behind Cologne',
+    description: 'Behind Amsterdam',
     goods: ['Heating', 'Kitchen'],
     host:
       {
@@ -115,11 +123,11 @@ const offers: Offers = [
         latitude: 52.370216,
         longitude: 4.895168,
         zoom: 10},
-      name: 'Cologne',
+      name: 'Amsterdam',
     },
     location: {
-      latitude: 52.35514938496378,
-      longitude: 4.673877537499948,
+      latitude: 52.3809553943508,
+      longitude: 4.939309666406198,
       zoom: 8,
     },
     id: 4,
@@ -135,4 +143,4 @@ const offers: Offers = [
   },
 ];
 
-export {offers};
+export {offers, CITY};

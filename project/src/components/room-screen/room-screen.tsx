@@ -1,6 +1,8 @@
+import {useState} from 'react';
 import {useParams} from 'react-router';
-import Logo from '../logo/logo';
 import CommentFormComponent from '../comment-form-component/comment-form-component';
+import Logo from '../logo/logo';
+import Map from '../map/map';
 import OffersListComponent from '../offers-list-component/offers-list-component';
 import PageNotFoundScreen from '../page-not-found-screen/page-not-found-screen';
 import {RoomScreenProps} from './type';
@@ -57,12 +59,16 @@ function RoomScreen({offers, comments, neighbours, authorizationStatus}: RoomScr
   const params: {id: string} = useParams();
   const id = +params.id;
   const thatOffer = offers.find((offer) => offer.id === id);
+  const [activeOffer, setActiveOffer] = useState(0);
+  const hoverOfferHandler = (idHover: number) => {
+    setActiveOffer(idHover);
+  };
 
   if (!thatOffer) {
     return <PageNotFoundScreen />;
   }
 
-  const {rating, title, description, host, isPremium, isFavorite, price, type, bedrooms, maxAdults, goods, images} = thatOffer;
+  const {rating, title, description, host, isPremium, isFavorite, price, type, bedrooms, maxAdults, goods, images, city} = thatOffer;
 
   return (
     <div className="page page--gray">
@@ -79,6 +85,7 @@ function RoomScreen({offers, comments, neighbours, authorizationStatus}: RoomScr
         <section className="property">
           <div className="property__gallery-container container">
             <div className="property__gallery">
+              <span className="visually-hidden">{activeOffer}</span>
               {images.map((image) => <ApartmentPicture src={image} key={image}/>)}
             </div>
           </div>
@@ -152,13 +159,15 @@ function RoomScreen({offers, comments, neighbours, authorizationStatus}: RoomScr
               </section>
             </div>
           </div>
-          <section className="property__map map"></section>
+          <section className="property__map map">
+            <Map city={city} offers={neighbours} mapHeigth={'579px'}/>
+          </section>
         </section>
         <div className="container">
           <section className="near-places places">
             <h2 className="near-places__title">Other places in the neighbourhood</h2>
             <div className="near-places__list places__list">
-              <OffersListComponent offers={offers} />
+              <OffersListComponent offers={neighbours} onListItemHover={hoverOfferHandler} />
             </div>
           </section>
         </div>

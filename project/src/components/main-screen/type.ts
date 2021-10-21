@@ -1,4 +1,4 @@
-import {Offers} from '../../types/types';
+import {Offers, Offer} from '../../types/types';
 
 type MainScreenProps = {
   offersCount: number,
