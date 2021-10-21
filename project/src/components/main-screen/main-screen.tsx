@@ -1,10 +1,20 @@
+import {useState} from 'react';
 import CityComponent from '../city-component/city-component';
 import Logo from '../logo/logo';
+import Map from '../map/map';
 import OffersListComponent from '../offers-list-component/offers-list-component';
 import {MainScreenProps} from './type';
+import {CITY} from '../../mocks/offers';
+import {Offer} from '../../types/types';
 
 function MainScreen(props: MainScreenProps): JSX.Element {
   const {offersCount, offers} = props;
+  const [selectedOffer, setSelectedOffer] = useState<Offer | undefined>(undefined);
+  const offerHandler = (id: number) => {
+    const currentOffer = offers.find((offer) => offer.id=== id);
+    setSelectedOffer(currentOffer);
+  };
+
   return (
     <div className="page page--gray">
       <header className="header">
@@ -51,11 +61,13 @@ function MainScreen(props: MainScreenProps): JSX.Element {
                 </ul>
               </form>
               <div className="cities__places-list places__list tabs__content">
-                <OffersListComponent offers={offers} />
+                <OffersListComponent offers={offers} onListItemHover={offerHandler} />
               </div>
             </section>
             <div className="cities__right-section">
-              <section className="cities__map map"></section>
+              <section className="cities__map map">
+                <Map city={CITY} offers={offers} selectedOffer={selectedOffer} mapHeigth="100%"/>
+              </section>
             </div>
           </div>
         </div>

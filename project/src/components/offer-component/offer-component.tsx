@@ -3,9 +3,9 @@ import {Link} from 'react-router-dom';
 import {OfferComponentyProps} from './type';
 import {numberToPersent} from '../../utils/utils';
 
-function OfferComponent({offer: {isPremium, price, isFavorite, title, previewImage, rating, type, id}}: OfferComponentyProps): JSX.Element {
+function OfferComponent({offer: {isPremium, price, isFavorite, title, previewImage, rating, type, id}, onListItemHover}: OfferComponentyProps): JSX.Element {
   return (
-    <article className="cities__place-card place-card" id={id.toString()}>
+    <article className="cities__place-card place-card" id={id.toString()} onMouseOver={()=> onListItemHover(id)} onMouseOut={()=> onListItemHover(0)}>
       <div className={isPremium ? 'place-card__mark' : 'place-card__mark visually-hidden'}>
         <span>Premium</span>
       </div>

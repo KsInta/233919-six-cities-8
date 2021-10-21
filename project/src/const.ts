@@ -20,4 +20,8 @@ const STARS = [
   {score: '1', titleName: 'terribly'},
 ];
 
-export {AppRoute, AuthorizationStatus, STARS};
+const URL_MARKER_DEFAULT = 'img/pin.svg';
+
+const URL_MARKER_ACTIVE = 'img/pin-active.svg';
+
+export {AppRoute, AuthorizationStatus, STARS, URL_MARKER_DEFAULT, URL_MARKER_ACTIVE};
