@@ -1,4 +1,3 @@
-//import {MouseEvent} from 'react';
 import OfferComponent from '../offer-component/offer-component';
 import {OffersListProps} from './type';
 

@@ -38,7 +38,6 @@ function Map({city, offers, selectedOffer, mapHeigth}: MapProps) {
 
   return (
     <div style={{ height: `${mapHeigth}` }} ref={mapRef}>
-
     </div>
   );
 }
