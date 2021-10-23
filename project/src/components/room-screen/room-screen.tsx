@@ -5,8 +5,8 @@ import Logo from '../logo/logo';
 import Map from '../map/map';
 import OffersListComponent from '../offers-list-component/offers-list-component';
 import PageNotFoundScreen from '../page-not-found-screen/page-not-found-screen';
+import ReviewListComponent from '../review-list-component/review-list-component';
 import {RoomScreenProps} from './type';
-import {Comment} from '../../types/types';
 import {AuthorizationStatus} from '../../const';
 import {numberToPersent} from '../../utils/utils';
 
@@ -24,35 +24,6 @@ function ApartmentPicture({src}: {src: string}) {
 
 function Good({goodName}: {goodName: string}) {
   return <li className="property__inside-item">{goodName}</li>;
-}
-
-function Review({commentObj: {comment, date, rating, user}}: {commentObj: Comment}) {
-  return (
-    <li className="reviews__item">
-      <div className="reviews__user user">
-        <div className="reviews__avatar-wrapper user__avatar-wrapper">
-          <img className="reviews__avatar user__avatar" src={user.avatarUrl} width="54" height="54" alt="Reviews avatar"/>
-        </div>
-        <span className="reviews__user-name">
-          {user.name}
-        </span>
-      </div>
-      <div className="reviews__info">
-        <div className="reviews__rating rating">
-          <div className="reviews__stars rating__stars">
-
-            <span style={{width: `${numberToPersent(rating)}%`}}></span>
-
-            <span className="visually-hidden">Rating</span>
-          </div>
-        </div>
-        <p className="reviews__text">
-          {comment}
-        </p>
-        <time className="reviews__time" dateTime={(new Date(date).toDateString())}>{(new Date(date).toLocaleString('en-US', {month: 'long', year: 'numeric'}))}</time>
-      </div>
-    </li>
-  );
 }
 
 function RoomScreen({offers, comments, neighbours, authorizationStatus}: RoomScreenProps): JSX.Element {
@@ -152,9 +123,7 @@ function RoomScreen({offers, comments, neighbours, authorizationStatus}: RoomScr
               </div>
               <section className="property__reviews reviews">
                 <h2 className="reviews__title">Reviews &middot; <span className="reviews__amount">{comments.length}</span></h2>
-                <ul className="reviews__list">
-                  {comments.map((comment) => <Review commentObj={comment} key={comment.id}/>)}
-                </ul>
+                <ReviewListComponent comments={comments} />
                 {authorizationStatus === AuthorizationStatus.Auth ? <CommentFormComponent /> : null}
               </section>
             </div>
