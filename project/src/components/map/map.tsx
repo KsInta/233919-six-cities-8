@@ -3,6 +3,7 @@ import {Icon, Marker} from 'leaflet';
 import 'leaflet/dist/leaflet.css';
 import useMap from '../../hooks/use-map';
 import {MapProps} from './type';
+import {getCurrentOffers} from '../../utils/utils';
 import {URL_MARKER_DEFAULT, URL_MARKER_ACTIVE} from '../../const';
 
 const defaultCustomIcon = new Icon({
@@ -18,23 +19,35 @@ const activetCustomIcon = new Icon({
 });
 
 function Map({city, offers, selectedOffer, mapHeigth}: MapProps) {
+  const currentOffers = getCurrentOffers(offers, city);
+  const currentCity = currentOffers[0].city;
   const mapRef = useRef<HTMLDivElement | null>(null);
-  const map = useMap(mapRef, city);
+  const map = useMap(mapRef, currentCity);
 
   useEffect(() => {
+    let markers: Marker[] = [];
     if (map) {
-      offers.forEach((offer) => {
+      markers = currentOffers.map((offer) => {
         const marker = new Marker({
           lat: offer.location.latitude,
           lng: offer.location.longitude,
         });
 
         marker
-          .setIcon(selectedOffer !== undefined && offer.id === selectedOffer.id ? activetCustomIcon: defaultCustomIcon)
+          .setIcon(selectedOffer !== undefined && offer.id === selectedOffer ? activetCustomIcon: defaultCustomIcon)
           .addTo(map);
+        return marker;
       });
     }
-  }, [map, offers, selectedOffer]);
+    return () => markers.forEach((marker) => marker.remove());
+  }, [map, offers, selectedOffer, currentCity]);
+
+  useEffect(() => {
+    const {latitude, longitude, zoom} = currentCity.location;
+    if (map) {
+      map.flyTo([latitude, longitude], zoom);
+    }
+  }, [currentCity, map]);
 
   return (
     <div style={{ height: `${mapHeigth}` }} ref={mapRef}>

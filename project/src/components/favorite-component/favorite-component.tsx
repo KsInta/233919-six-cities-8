@@ -1,11 +1,11 @@
 import {AppRoute} from '../../const';
 import {Link} from 'react-router-dom';
-import {OfferComponentyProps} from '../offer-component/type';
+import {OfferComponentProps} from '../offer-component/type';
 import {numberToPersent} from '../../utils/utils';
 
-type NewTry = Omit<OfferComponentyProps, 'onListItemHover'>;
+type OfferFavoriteComponentProps = Omit<OfferComponentProps, 'onListItemHover'>;
 
-function FavoriteComponent({offer: {isPremium, price, isFavorite, title, previewImage, rating, type, id}}: NewTry): JSX.Element {
+function FavoriteComponent({offer: {isPremium, price, isFavorite, title, previewImage, rating, type, id}}: OfferFavoriteComponentProps): JSX.Element {
   return (
     <article className="favorites__card place-card">
       <div className={isPremium ? 'place-card__mark' : 'place-card__mark visually-hidden'}>

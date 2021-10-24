@@ -8,15 +8,12 @@ import SignInScreen from '../sign-in-screen/sign-in-screen';
 import {AppRoute, AuthorizationStatus} from '../../const';
 import {AppScreenProps} from './type';
 
-function App({offersCount, offers, comments}: AppScreenProps): JSX.Element {
+function App({offers, comments}: AppScreenProps): JSX.Element {
   return (
     <BrowserRouter>
       <Switch>
         <Route path={AppRoute.Main} exact>
-          <MainScreen
-            offersCount={offersCount}
-            offers={offers}
-          />
+          <MainScreen />
         </Route>
         <Route path={AppRoute.Login} exact>
           <SignInScreen />
@@ -25,7 +22,6 @@ function App({offersCount, offers, comments}: AppScreenProps): JSX.Element {
           <RoomScreen
             offers={offers}
             comments={comments}
-            neighbours={offers.slice(1,4)}
             authorizationStatus={AuthorizationStatus.NoAuth}
           />
         </Route>

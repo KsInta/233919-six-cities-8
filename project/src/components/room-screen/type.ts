@@ -4,7 +4,6 @@ import {AuthorizationStatus} from '../../const';
 type RoomScreenProps = {
   offers: Offers,
   comments: Comments,
-  neighbours: Offers,
   authorizationStatus: AuthorizationStatus,
 };
 

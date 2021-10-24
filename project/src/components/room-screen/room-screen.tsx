@@ -26,7 +26,7 @@ function Good({goodName}: {goodName: string}) {
   return <li className="property__inside-item">{goodName}</li>;
 }
 
-function RoomScreen({offers, comments, neighbours, authorizationStatus}: RoomScreenProps): JSX.Element {
+function RoomScreen({offers, comments, authorizationStatus}: RoomScreenProps): JSX.Element {
   const params: {id: string} = useParams();
   const id = +params.id;
   const thatOffer = offers.find((offer) => offer.id === id);
@@ -38,6 +38,8 @@ function RoomScreen({offers, comments, neighbours, authorizationStatus}: RoomScr
   if (!thatOffer) {
     return <PageNotFoundScreen />;
   }
+
+  const neighbours = offers.filter((offer)=>(offer.city.name===thatOffer.city.name)&&(offer.id!==thatOffer.id)).slice(0,3);
 
   const {rating, title, description, host, isPremium, isFavorite, price, type, bedrooms, maxAdults, goods, images, city} = thatOffer;
 
@@ -129,7 +131,7 @@ function RoomScreen({offers, comments, neighbours, authorizationStatus}: RoomScr
             </div>
           </div>
           <section className="property__map map">
-            <Map city={city} offers={neighbours} mapHeigth={'579px'}/>
+            <Map city={city.name} offers={neighbours} mapHeigth={'579px'}/>
           </section>
         </section>
         <div className="container">

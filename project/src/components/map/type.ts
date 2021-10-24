@@ -1,9 +1,9 @@
 import {City, Offers, Offer} from '../../types/types';
 
 type MapProps = {
-  city: City,
+  city: string,
   offers: Offers,
-  selectedOffer?: Offer | undefined,
+  selectedOffer?: number,
   mapHeigth: string,
 };
 
