@@ -1,4 +1,4 @@
-import {City, Offers, Offer} from '../../types/types';
+import {Offers} from '../../types/types';
 
 type MapProps = {
   city: string,
