@@ -1,8 +1,8 @@
 import Logo from '../logo/logo';
-import FavoriteComponent from '../favorite-component/favorite-component';
-import {FavoritesScreenProps} from './type';
+import FavouriteComponent from '../favourite-component/favourite-component';
+import {FavouritesScreenProps} from './type';
 
-function FavoritesScreen({offers}: FavoritesScreenProps): JSX.Element {
+function FavouritesScreen({offers}: FavouritesScreenProps): JSX.Element {
   return (
     <div className="page page--gray">
       <header className="header">
@@ -28,7 +28,7 @@ function FavoritesScreen({offers}: FavoritesScreenProps): JSX.Element {
                   </div>
                 </div>
                 <div className="favorites__places">
-                  {offers.filter((offer) => offer.city.name === 'Amsterdam').map((offer) => offer.isFavorite ? <FavoriteComponent offer={offer} key={offer.id}/> : '')}
+                  {offers.filter((offer) => offer.city.name === 'Amsterdam').map((offer) => offer.isFavorite ? <FavouriteComponent offer={offer} key={offer.id}/> : '')}
                 </div>
               </li>
 
@@ -41,7 +41,7 @@ function FavoritesScreen({offers}: FavoritesScreenProps): JSX.Element {
                   </div>
                 </div>
                 <div className="favorites__places">
-                  {offers.filter((offer) => offer.city.name === 'Cologne').map((offer) => offer.isFavorite ? <FavoriteComponent offer={offer} key={offer.id}/> : '')}
+                  {offers.filter((offer) => offer.city.name === 'Cologne').map((offer) => offer.isFavorite ? <FavouriteComponent offer={offer} key={offer.id}/> : '')}
                 </div>
               </li>
             </ul>
@@ -52,4 +52,4 @@ function FavoritesScreen({offers}: FavoritesScreenProps): JSX.Element {
   );
 }
 
-export default FavoritesScreen;
+export default FavouritesScreen;

@@ -17,7 +17,7 @@ type Host = {
   avatarUrl: string,
   isPro: boolean,
   name: string,
-};
+}
 
 type Location = {
   latitude: number,
@@ -47,7 +47,7 @@ type Offer = {
   rating: number,
   title: string,
   type: string,
-};
+}
 
 type Comments = Comment[];
 

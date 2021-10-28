@@ -1,8 +1,8 @@
 import {Offer} from '../../types/types';
 
-type OfferComponentyProps = {
+type OfferComponentProps = {
   offer: Offer,
   onListItemHover: (id: number) => void,
 };
 
-export type {OfferComponentyProps};
+export type {OfferComponentProps};

@@ -3,7 +3,7 @@ const enum AppRoute {
   Login = '/login',
   Main = '/',
   Room = '/room/',
-  RoomId = '/room/:id'
+  RoomId = '/room/:id',
 }
 
 const enum AuthorizationStatus {
@@ -20,8 +20,24 @@ const STARS = [
   {score: '1', titleName: 'terribly'},
 ];
 
+const CITIES = [
+  'Paris',
+  'Cologne',
+  'Brussels',
+  'Amsterdam',
+  'Hamburg',
+  'Dusseldorf',
+];
+
+export enum SortType {
+  Popular = 'Popular',
+  PriceToHight = 'Price: low to high',
+  PriceToLow = 'Price: high to low',
+  TopRated = 'Top rated first',
+}
+
 const URL_MARKER_DEFAULT = 'img/pin.svg';
 
 const URL_MARKER_ACTIVE = 'img/pin-active.svg';
 
-export {AppRoute, AuthorizationStatus, STARS, URL_MARKER_DEFAULT, URL_MARKER_ACTIVE};
+export {AppRoute, AuthorizationStatus, STARS, CITIES, URL_MARKER_DEFAULT, URL_MARKER_ACTIVE};
