@@ -10,11 +10,8 @@ const mapStateToProps = ({city}: State) => ({
   city,
 });
 
-type CityListPropsType = {
-}
-
 type PropsFromReduxType = ConnectedProps<typeof connector>;
-type ConnectedComponentPropsType = PropsFromReduxType & CityListPropsType;
+type ConnectedComponentPropsType = PropsFromReduxType;
 
 const mapDispatchToProps = (dispatch: Dispatch<Actions>) => ({
   onCityChange(cityName: string) {
