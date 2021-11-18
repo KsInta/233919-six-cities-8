@@ -5,13 +5,13 @@ import {State} from '../../types/state';
 import {getCurrentOffers} from '../../utils/utils';
 import {getSortedOffers} from '../../sorting';
 
-type PropsFromReduxType = ConnectedProps<typeof connector>
-type ConnectedComponentPropsType = PropsFromReduxType & OffersListProps;
-
 const mapStateToProps = ({sortType, city}: State) => ({
   sortType,
   city,
 });
+
+type PropsFromReduxType = ConnectedProps<typeof connector>
+type ConnectedComponentPropsType = PropsFromReduxType & OffersListProps;
 
 const connector = connect(mapStateToProps);
 
@@ -20,7 +20,7 @@ function OffersListComponent({offers, onListItemHover, city, sortType} : Connect
   offers = getSortedOffers(offers, sortType);
 
   return (
-    <div className="cities__places-list places__list tabs__content">
+    <div className="cities__places-list places__list tabs__content" style={{maxHeight: '65vh'}}>
       {offers.map((offer) => <OfferComponent key={offer.id} offer={offer} onListItemHover={onListItemHover}/>)}
     </div>
   );

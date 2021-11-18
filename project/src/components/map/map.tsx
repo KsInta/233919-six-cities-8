@@ -50,8 +50,8 @@ function Map({city, offers, selectedOffer, mapHeigth}: MapProps) {
   }, [currentCity, map]);
 
   return (
-    <div style={{ height: `${mapHeigth}` }} ref={mapRef}>
-    </div>
+    <section className="cities__map map" style={{ height: `${mapHeigth}` }} ref={mapRef}>
+    </section>
   );
 }
 

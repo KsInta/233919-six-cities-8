@@ -1,9 +1,15 @@
 const enum AppRoute {
-  Favorites = '/favorites',
+  Favourites = '/favourites',
   Login = '/login',
   Main = '/',
   Room = '/room/',
   RoomId = '/room/:id',
+}
+
+const enum APIRoute {
+  Offers = '/hotels',
+  Login = '/login',
+  Logout = '/logout',
 }
 
 const enum AuthorizationStatus {
@@ -40,4 +46,4 @@ const URL_MARKER_DEFAULT = 'img/pin.svg';
 
 const URL_MARKER_ACTIVE = 'img/pin-active.svg';
 
-export {AppRoute, AuthorizationStatus, STARS, CITIES, URL_MARKER_DEFAULT, URL_MARKER_ACTIVE};
+export {AppRoute, APIRoute, AuthorizationStatus, STARS, CITIES, URL_MARKER_DEFAULT, URL_MARKER_ACTIVE};
