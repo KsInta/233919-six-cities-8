@@ -2,17 +2,15 @@ import {useState} from 'react';
 import {connect, ConnectedProps} from 'react-redux';
 import {State} from '../../types/state';
 import CityListComponent from '../city-list-component/city-list-component';
+import HeaderNavComponent from '../header-nav-component/header-nav-component';
 import Logo from '../logo/logo';
 import Map from '../map/map';
 import OffersListComponent from '../offers-list-component/offers-list-component';
 import PlacesOptionComponent from '../places-option-component/places-option-component';
 import {getCurrentOffers} from '../../utils/utils';
 
-type MainScreenProps = {
-}
-
 type PropsFromReduxType = ConnectedProps<typeof connector>
-type ConnectedComponentPropsType = PropsFromReduxType & MainScreenProps;
+type ConnectedComponentPropsType = PropsFromReduxType;
 
 const mapStateToProps = ({city, offers}: State) => ({
   city,
@@ -33,9 +31,8 @@ function MainScreen(props: ConnectedComponentPropsType): JSX.Element {
       <header className="header">
         <div className="container">
           <div className="header__wrapper">
-            <div className="header__left">
-              <Logo />
-            </div>
+            <Logo />
+            <HeaderNavComponent />
           </div>
         </div>
       </header>
@@ -52,14 +49,10 @@ function MainScreen(props: ConnectedComponentPropsType): JSX.Element {
               <h2 className="visually-hidden">Places</h2>
               <b className="places__found">{getCurrentOffers(offers, city).length} places to stay in {city}</b>
               <PlacesOptionComponent />
-              <div className="cities__places-list places__list tabs__content">
-                <OffersListComponent offers={offers} onListItemHover={handleActiveOffer} />
-              </div>
+              <OffersListComponent offers={offers} onListItemHover={handleActiveOffer} />
             </section>
-            <div className="cities__right-section">
-              <section className="cities__map map">
-                <Map city={city} offers={offers} selectedOffer={selectedOffer} mapHeigth="100%"/>
-              </section>
+            <div className="cities__right-section" style={{marginTop: '130px'}}>
+              <Map city={city} offers={offers} selectedOffer={selectedOffer} mapHeigth="550px"/>
             </div>
           </div>
         </div>

@@ -1,7 +1,6 @@
-import {Offers, Comments} from '../../types/types';
+import {Comments} from '../../types/types';
 
 type AppScreenProps = {
-  offers: Offers,
   comments: Comments,
 }
 
