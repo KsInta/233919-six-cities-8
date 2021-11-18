@@ -1,4 +1,4 @@
-import {Offers, Comments} from '../../types/types';
+import {Comments} from '../../types/types';
 
 type AppScreenProps = {
   comments: Comments,
