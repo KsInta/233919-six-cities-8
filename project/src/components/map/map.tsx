@@ -18,7 +18,7 @@ const activetCustomIcon = new Icon({
   iconAnchor: [14, 39],
 });
 
-function Map({city, offers, selectedOffer, mapHeigth}: MapProps) {
+function Map({city, offers, selectedOffer, mapHeigth}: MapProps): JSX.Element {
   const currentOffers = getCurrentOffers(offers, city);
   const currentCity = currentOffers[0].city;
   const mapRef = useRef<HTMLDivElement | null>(null);
@@ -40,7 +40,7 @@ function Map({city, offers, selectedOffer, mapHeigth}: MapProps) {
       });
     }
     return () => markers.forEach((marker) => marker.remove());
-  }, [map, offers, selectedOffer, currentCity]);
+  }, [map, offers, selectedOffer, currentCity, currentOffers]);
 
   useEffect(() => {
     const {latitude, longitude, zoom} = currentCity.location;

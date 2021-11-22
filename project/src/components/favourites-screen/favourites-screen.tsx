@@ -1,6 +1,8 @@
+import {Link} from 'react-router-dom';
 import Logo from '../logo/logo';
 import FavouriteComponent from '../favourite-component/favourite-component';
 import {FavouritesScreenProps} from './type';
+import {AppRoute} from '../../const';
 
 function FavouritesScreen({offers}: FavouritesScreenProps): JSX.Element {
   return (
@@ -22,9 +24,9 @@ function FavouritesScreen({offers}: FavouritesScreenProps): JSX.Element {
               <li className="favorites__locations-items">
                 <div className="favorites__locations locations locations--current">
                   <div className="locations__item">
-                    <a className="locations__item-link" href="#">
+                    <Link to={AppRoute.Main} className="locations__item-link" href="#">
                       <span>Amsterdam</span>
-                    </a>
+                    </Link>
                   </div>
                 </div>
                 <div className="favorites__places">
@@ -35,9 +37,9 @@ function FavouritesScreen({offers}: FavouritesScreenProps): JSX.Element {
               <li className="favorites__locations-items">
                 <div className="favorites__locations locations locations--current">
                   <div className="locations__item">
-                    <a className="locations__item-link" href="#">
+                    <Link to={AppRoute.Main} className="locations__item-link" href="#">
                       <span>Cologne</span>
-                    </a>
+                    </Link>
                   </div>
                 </div>
                 <div className="favorites__places">

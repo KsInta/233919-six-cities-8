@@ -7,12 +7,13 @@ import {AuthorizationStatus, SortType} from '../const';
 
 enum ActionType {
   ChangeCity = 'app/changeCity',
-  ChangeOffers = 'app/changeOffers',
   ChangeSorting = 'option/changeSorting',
   LoadOffers = 'data/loadOffers',
+  IsDataLoaded = 'data/isLoading',
   RequireAuthorization = 'user/requireAuthorization',
   RequireLogout = 'user/requireLogout',
   SetAuthor = 'data/setAuthor',
+  RedirectToRoute = 'user/redirectToRoute',
 }
 
 type ChangeCityAction = {
@@ -30,6 +31,11 @@ type LoadOffersAction = {
   payload: Offers,
 }
 
+type IsDataLoadedAction = {
+  type: ActionType.IsDataLoaded,
+  payload: boolean,
+}
+
 type RequireAuthorizationAction = {
   type: ActionType.RequireAuthorization,
   payload: AuthorizationStatus,
@@ -45,14 +51,19 @@ type SetAuthorAction = {
   payload: AuthInfo,
 }
 
+type RedirectToRouteAction = {
+  type: ActionType.RedirectToRoute,
+  payload: string,
+}
+
 type ThunkActionResult<R = Promise<void>> = ThunkAction<R, State, AxiosInstance, Actions>;
 
 type ThunkAppDispatch = ThunkDispatch<State, AxiosInstance, Actions>;
 
 export {ActionType};
 
-export type Actions = ChangeCityAction | ChangeSortingAction | LoadOffersAction | RequireAuthorizationAction | RequireLogoutAction | SetAuthorAction;
+export type Actions = ChangeCityAction | ChangeSortingAction | LoadOffersAction | IsDataLoadedAction | RequireAuthorizationAction | RequireLogoutAction | SetAuthorAction | RedirectToRouteAction;
 
-export type {ChangeCityAction, ChangeSortingAction, LoadOffersAction, RequireAuthorizationAction, RequireLogoutAction, SetAuthorAction};
+export type {ChangeCityAction, ChangeSortingAction, LoadOffersAction, IsDataLoadedAction, RequireAuthorizationAction, RequireLogoutAction, SetAuthorAction, RedirectToRouteAction};
 
 export type {ThunkActionResult, ThunkAppDispatch};

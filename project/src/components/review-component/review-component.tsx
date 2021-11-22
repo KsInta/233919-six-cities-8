@@ -1,7 +1,7 @@
 import {ReviewProps} from './type';
 import {numberToPersent} from '../../utils/utils';
 
-function ReviewComponent({comment: {comment, date, rating, user}}: ReviewProps) {
+function ReviewComponent({comment: {comment, date, rating, user}}: ReviewProps): JSX.Element {
   return (
     <li className="reviews__item">
       <div className="reviews__user user">

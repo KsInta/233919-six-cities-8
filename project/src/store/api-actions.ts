@@ -1,16 +1,18 @@
 import {ThunkActionResult} from '../types/action';
-import {loadOffers, requireAuthorization, requireLogout, setAuthor} from './action';
+import {loadOffers, toggleIsLoading, requireAuthorization, requireLogout, setAuthor, redirectToRoute} from './action';
 import {saveToken, dropToken} from '../services/token';
 import {adaptOfferToClient, adaptAuthInfoToClient} from '../services/adapter';
-import {APIRoute, AuthorizationStatus} from '../const';
+import {AppRoute, APIRoute, AuthorizationStatus} from '../const';
 import {ServerOffer} from '../types/types';
 import {AuthData, ServerAuthInfo} from '../types/auth-data';
 
 const fetchOffersAction = (): ThunkActionResult =>
   async (dispatch, _getState, api): Promise<void> => {
+    dispatch(toggleIsLoading(false));
     const {data} = await api.get<ServerOffer[]>(APIRoute.Offers);
     const offers = data.map(adaptOfferToClient);
     dispatch(loadOffers(offers));
+    dispatch(toggleIsLoading(true));
   };
 
 const checkAuthAction = (): ThunkActionResult =>
@@ -23,13 +25,16 @@ const checkAuthAction = (): ThunkActionResult =>
 
 const loginAction = (authData: AuthData): ThunkActionResult =>
   async (dispatch, _getState, api) => {
+    //dispatch(toggleIsLoading(false));
     await api.post<ServerAuthInfo>(APIRoute.Login, authData)
       .then((response) => {
         const author = adaptAuthInfoToClient(response.data);
         saveToken(author.token);
         dispatch(requireAuthorization(AuthorizationStatus.Auth));
         dispatch(setAuthor(author));
+        dispatch(redirectToRoute(AppRoute.Main));
       });
+    //dispatch(toggleIsLoading(true));
   };
 
 const logoutAction = (): ThunkActionResult =>
