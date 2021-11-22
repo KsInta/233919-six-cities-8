@@ -25,7 +25,6 @@ const checkAuthAction = (): ThunkActionResult =>
 
 const loginAction = (authData: AuthData): ThunkActionResult =>
   async (dispatch, _getState, api) => {
-    //dispatch(toggleIsLoading(false));
     await api.post<ServerAuthInfo>(APIRoute.Login, authData)
       .then((response) => {
         const author = adaptAuthInfoToClient(response.data);
@@ -34,7 +33,6 @@ const loginAction = (authData: AuthData): ThunkActionResult =>
         dispatch(setAuthor(author));
         dispatch(redirectToRoute(AppRoute.Main));
       });
-    //dispatch(toggleIsLoading(true));
   };
 
 const logoutAction = (): ThunkActionResult =>
