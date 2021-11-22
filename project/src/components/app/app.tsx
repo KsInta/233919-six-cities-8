@@ -1,5 +1,5 @@
 import {connect, ConnectedProps} from 'react-redux';
-import {BrowserRouter, Route, Switch} from 'react-router-dom';
+import {Switch, Route, Router as BrowserRouter} from 'react-router-dom';
 import FavouritesScreen from '../favourites-screen/favourites-screen';
 import LoadingScreen from '../loading-screen/loading-screen';
 import MainScreen from '../main-screen/main-screen';
@@ -11,6 +11,7 @@ import {AppRoute, AuthorizationStatus} from '../../const';
 import {AppScreenProps} from './type';
 import {State} from '../../types/state';
 import {isCheckedAuth} from '../../app';
+import browserHistory from '../../browser-history';
 
 type PropsFromReduxType = ConnectedProps<typeof connector>
 type ConnectedComponentPropsType = PropsFromReduxType & AppScreenProps;
@@ -32,7 +33,7 @@ function App({offers, comments, authorizationStatus, isDataLoaded}: ConnectedCom
   }
 
   return (
-    <BrowserRouter>
+    <BrowserRouter history={browserHistory}>
       <Switch>
         <Route path={AppRoute.Main} exact>
           <MainScreen />

@@ -1,13 +1,17 @@
-import {useRef, FormEvent} from 'react';
-import {useHistory} from 'react-router-dom';
+import {Action} from '@reduxjs/toolkit';
+import {useRef, FormEvent, Dispatch} from 'react';
 import {connect, ConnectedProps} from 'react-redux';
+import {Link} from 'react-router-dom';
 import Logo from '../logo/logo';
 import {loginAction} from '../../store/api-actions';
+import {AppRoute} from '../../const';
 import {ThunkAppDispatch} from '../../types/action';
 import {AuthData} from '../../types/auth-data';
-import {AppRoute} from '../../const';
 
-const mapDispatchToProps = (dispatch: ThunkAppDispatch) => ({
+type LoginPageProosType = {
+};
+
+const mapDispatchToProps = (dispatch: ThunkAppDispatch&Dispatch<Action>) => ({
   onSubmit(authData: AuthData) {
     dispatch(loginAction(authData));
   },
@@ -15,8 +19,8 @@ const mapDispatchToProps = (dispatch: ThunkAppDispatch) => ({
 
 const connector = connect(null, mapDispatchToProps);
 
-type PropsFromReduxType = ConnectedProps<typeof connector>
-type ConnectedComponentPropsType = PropsFromReduxType;
+type PropsFromReduxType = ConnectedProps<typeof connector>;
+type ConnectedComponentPropsType = PropsFromReduxType & LoginPageProosType;
 
 function SignInScreen(props: ConnectedComponentPropsType): JSX.Element {
   const {onSubmit} = props;
@@ -24,14 +28,12 @@ function SignInScreen(props: ConnectedComponentPropsType): JSX.Element {
   const loginRef = useRef<HTMLInputElement | null>(null);
   const passwordRef = useRef<HTMLInputElement | null>(null);
 
-  const history = useHistory();
-
   const handleSubmit = (evt: FormEvent<HTMLFormElement>) => {
     evt.preventDefault();
 
     if (loginRef.current !== null && passwordRef.current !== null) {
       onSubmit({
-        login: loginRef.current.value,
+        email: loginRef.current.value,
         password: passwordRef.current.value,
       });
     }
@@ -61,14 +63,14 @@ function SignInScreen(props: ConnectedComponentPropsType): JSX.Element {
                 <label className="visually-hidden">Password</label>
                 <input ref={passwordRef} className="login__input form__input" type="password" name="password" placeholder="Password" required />
               </div>
-              <button onClick={() => history.push(AppRoute.Main)} className="login__submit form__submit button" type="submit">Sign in</button>
+              <button className="login__submit form__submit button" type="submit">Sign in</button>
             </form>
           </section>
           <section className="locations locations--login locations--current">
             <div className="locations__item">
-              <a className="locations__item-link" href="#">
+              <Link to={AppRoute.Main} className="locations__item-link" href="#">
                 <span>Amsterdam</span>
-              </a>
+              </Link>
             </div>
           </section>
         </div>

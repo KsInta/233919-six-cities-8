@@ -20,8 +20,10 @@ const reducer = (state: State = initialState, action: Actions): State => {
       return {...state, sortType: action.payload};
     case ActionType.LoadOffers:
       return {...state, offers: action.payload};
+    case ActionType.IsDataLoaded:
+      return {...state, isDataLoaded: action.payload};
     case ActionType.RequireAuthorization:
-      return {...state, authorizationStatus: action.payload, isDataLoaded: true};
+      return {...state, authorizationStatus: action.payload};
     case ActionType.RequireLogout:
       return {...state, authorizationStatus: AuthorizationStatus.NoAuth, author: {} as AuthInfo};
     case ActionType.SetAuthor:

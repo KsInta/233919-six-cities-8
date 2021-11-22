@@ -1,6 +1,6 @@
 import {Offers} from '../types/types';
-import {ActionType, ChangeCityAction, ChangeSortingAction, LoadOffersAction, RequireAuthorizationAction, RequireLogoutAction, SetAuthorAction} from '../types/action';
-import {AuthorizationStatus, SortType} from '../const';
+import {ActionType, ChangeCityAction, ChangeSortingAction, LoadOffersAction, IsDataLoadedAction, RequireAuthorizationAction, RequireLogoutAction, SetAuthorAction, RedirectToRouteAction} from '../types/action';
+import {AppRoute, AuthorizationStatus, SortType} from '../const';
 import {AuthInfo} from '../types/auth-data';
 
 const changeCity = (city: string): ChangeCityAction => ({
@@ -18,6 +18,11 @@ const loadOffers = (offers: Offers): LoadOffersAction => ({
   payload: offers,
 });
 
+const toggleIsLoading = (isLoading: boolean): IsDataLoadedAction => ({
+  type: ActionType.IsDataLoaded,
+  payload: isLoading,
+});
+
 const requireAuthorization = (authStatus: AuthorizationStatus): RequireAuthorizationAction => ({
   type: ActionType.RequireAuthorization,
   payload: authStatus,
@@ -33,4 +38,9 @@ const setAuthor = (author: AuthInfo): SetAuthorAction => ({
   payload: author,
 });
 
-export {changeCity, changeSorting, loadOffers, requireAuthorization, requireLogout, setAuthor};
+const redirectToRoute = (url: AppRoute): RedirectToRouteAction => ({
+  type: ActionType.RedirectToRoute,
+  payload: url,
+});
+
+export {changeCity, changeSorting, loadOffers, toggleIsLoading, requireAuthorization, requireLogout, setAuthor, redirectToRoute};
