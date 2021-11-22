@@ -12,7 +12,7 @@ enum ActionType {
   IsDataLoaded = 'data/isLoading',
   RequireAuthorization = 'user/requireAuthorization',
   RequireLogout = 'user/requireLogout',
-  SetAuthor = 'data/setAuthor',
+  SetAuthor = 'user/setAuthor',
   RedirectToRoute = 'user/redirectToRoute',
 }
 
