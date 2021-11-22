@@ -1,7 +1,9 @@
+import {AxiosError} from 'axios';
 import {ThunkActionResult} from '../types/action';
 import {loadOffers, toggleIsLoading, requireAuthorization, requireLogout, setAuthor, redirectToRoute} from './action';
 import {saveToken, dropToken} from '../services/token';
 import {adaptOfferToClient, adaptAuthInfoToClient} from '../services/adapter';
+import {toast} from 'react-toastify';
 import {AppRoute, APIRoute, AuthorizationStatus} from '../const';
 import {ServerOffer} from '../types/types';
 import {AuthData, ServerAuthInfo} from '../types/auth-data';
@@ -18,13 +20,18 @@ const fetchOffersAction = (): ThunkActionResult =>
 const checkAuthAction = (): ThunkActionResult =>
   async (dispatch, _getState, api) => {
     await api.get<ServerAuthInfo>(APIRoute.Login)
-      .then(() => {
+      .then((response) => {
+        const author = adaptAuthInfoToClient(response.data);
+        saveToken(author.token);
         dispatch(requireAuthorization(AuthorizationStatus.Auth));
-      });
+        dispatch(setAuthor(author));
+      }).
+      catch((err: AxiosError) => toast.info(err.response?.status));
   };
 
 const loginAction = (authData: AuthData): ThunkActionResult =>
   async (dispatch, _getState, api) => {
+    //dispatch(toggleIsLoading(false));
     await api.post<ServerAuthInfo>(APIRoute.Login, authData)
       .then((response) => {
         const author = adaptAuthInfoToClient(response.data);
@@ -33,6 +40,7 @@ const loginAction = (authData: AuthData): ThunkActionResult =>
         dispatch(setAuthor(author));
         dispatch(redirectToRoute(AppRoute.Main));
       });
+    //dispatch(toggleIsLoading(true));
   };
 
 const logoutAction = (): ThunkActionResult =>
