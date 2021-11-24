@@ -1,14 +1,43 @@
-import {useState} from 'react';
+import {useState, useEffect} from 'react';
 import {useParams} from 'react-router';
+import {connect, ConnectedProps} from 'react-redux';
+import {ThunkAppDispatch} from '../../types/action';
 import CommentFormComponent from '../comment-form-component/comment-form-component';
+import FooterComponent from '../footer-component/footer-component';
+import HeaderNavComponent from '../header-nav-component/header-nav-component';
+import LoadingScreen from '../loading-screen/loading-screen';
 import Logo from '../logo/logo';
 import Map from '../map/map';
 import OffersListComponent from '../offers-list-component/offers-list-component';
 import PageNotFoundScreen from '../page-not-found-screen/page-not-found-screen';
 import ReviewListComponent from '../review-list-component/review-list-component';
-import {RoomScreenProps} from './type';
 import {AuthorizationStatus} from '../../const';
+import {State} from '../../types/state';
 import {numberToPersent} from '../../utils/utils';
+import {fetchCommentsAction, fetchNearOffersAction, fetchOfferByIdAction, fetchSetFavouriteAction} from '../../store/api-actions';
+
+const mapStateToProps = ({offer, offers, reviews, nearOffers, authorizationStatus}: State) => ({
+  offer,
+  offers,
+  reviews,
+  nearOffers,
+  authorizationStatus,
+});
+
+const mapDispatchToProps = (dispatch: ThunkAppDispatch) => ({
+  onSetFavourite: (id: number, status: boolean) => {
+    dispatch(fetchSetFavouriteAction(id, status));
+  },
+  onLoad: (id: string) => Promise.all([
+    dispatch(fetchOfferByIdAction(id)),
+    dispatch(fetchCommentsAction(id)),
+    dispatch(fetchNearOffersAction(id)),
+  ]),
+});
+
+const connector = connect(mapStateToProps, mapDispatchToProps);
+
+type PropsFromRedux = ConnectedProps<typeof connector>;
 
 function PremiumMarker() {
   return <div className="property__mark"><span>Premium</span></div>;
@@ -26,31 +55,34 @@ function Good({goodName}: {goodName: string}) {
   return <li className="property__inside-item">{goodName}</li>;
 }
 
-function RoomScreen({offers, comments, authorizationStatus}: RoomScreenProps): JSX.Element {
+function RoomScreen({offer, reviews, offers, nearOffers, onLoad, onSetFavourite, authorizationStatus}: PropsFromRedux): JSX.Element {
+  const {id, rating, title, description, host, isPremium, isFavorite, price, type, bedrooms, maxAdults, goods, images, city} = offer;
   const params: {id: string} = useParams();
-  const id = +params.id;
-  const thatOffer = offers.find((offer) => offer.id === id);
-  const [activeOffer, setActiveOffer] = useState(0);
-  const hoverOfferHandler = (idHover: number) => {
-    setActiveOffer(idHover);
-  };
+  const mapPoints = [...nearOffers, offer];
+  const selectedOffer = id;
+  const hoverOfferHandler = () => null;
 
-  if (!thatOffer) {
-    return <PageNotFoundScreen />;
+  const [isDataLoaded, setDataLoaded] = useState(false);
+
+  useEffect(() => {
+    onLoad(params.id).then(() => setDataLoaded(true));
+  }, [params.id, onLoad]);
+
+  if (!isDataLoaded) {
+    return <LoadingScreen/>;
   }
 
-  const neighbours = offers.filter((offer)=>(offer.city.name===thatOffer.city.name)&&(offer.id!==thatOffer.id)).slice(0,3);
-
-  const {rating, title, description, host, isPremium, isFavorite, price, type, bedrooms, maxAdults, goods, images, city} = thatOffer;
+  if (!id) {
+    return <PageNotFoundScreen />;
+  }
 
   return (
     <div className="page page--gray">
       <header className="header">
         <div className="container">
           <div className="header__wrapper">
-            <div className="header__left">
-              <Logo />
-            </div>
+            <Logo />
+            <HeaderNavComponent />
           </div>
         </div>
       </header>
@@ -58,7 +90,6 @@ function RoomScreen({offers, comments, authorizationStatus}: RoomScreenProps): J
         <section className="property">
           <div className="property__gallery-container container">
             <div className="property__gallery">
-              <span className="visually-hidden">{activeOffer}</span>
               {images.map((image) => <ApartmentPicture src={image} key={image}/>)}
             </div>
           </div>
@@ -69,8 +100,8 @@ function RoomScreen({offers, comments, authorizationStatus}: RoomScreenProps): J
                 <h1 className="property__name">
                   {title}
                 </h1>
-                <button className={isFavorite ? 'property__bookmark-button place-card__bookmark-button--active button' : 'property__bookmark-button button'} type="button">
-                  <svg className="place-card__bookmark-icon" width="31" height="33">
+                <button className={`property__bookmark-button ${isFavorite && 'property__bookmark-button--active'} button`} type="button" onClick={() => onSetFavourite(id, !isFavorite)}>
+                  <svg className="property__bookmark-icon" width="31" height="33">
                     <use xlinkHref="#icon-bookmark"></use>
                   </svg>
                   <span className="visually-hidden">To bookmarks</span>
@@ -124,27 +155,29 @@ function RoomScreen({offers, comments, authorizationStatus}: RoomScreenProps): J
                 </div>
               </div>
               <section className="property__reviews reviews">
-                <h2 className="reviews__title">Reviews &middot; <span className="reviews__amount">{comments.length}</span></h2>
-                <ReviewListComponent comments={comments} />
+                <h2 className="reviews__title">Reviews &middot; <span className="reviews__amount">{reviews.length}</span></h2>
+                <ReviewListComponent reviews={reviews} />
                 {authorizationStatus === AuthorizationStatus.Auth ? <CommentFormComponent /> : null}
               </section>
             </div>
           </div>
           <section className="property__map map">
-            <Map city={city.name} offers={neighbours} mapHeigth={'579px'}/>
+            <Map city={city.name} offers={mapPoints} mapHeigth={'579px'} selectedOffer={selectedOffer}/>
           </section>
         </section>
         <div className="container">
           <section className="near-places places">
             <h2 className="near-places__title">Other places in the neighbourhood</h2>
             <div className="near-places__list places__list">
-              <OffersListComponent offers={neighbours} onListItemHover={hoverOfferHandler} />
+              <OffersListComponent offers={nearOffers} onListItemHover={hoverOfferHandler} />
             </div>
           </section>
         </div>
       </main>
+      <FooterComponent />
     </div>
   );
 }
 
-export default RoomScreen;
+export {RoomScreen};
+export default connector(RoomScreen);

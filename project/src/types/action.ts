@@ -1,7 +1,7 @@
 import {ThunkAction, ThunkDispatch} from 'redux-thunk';
 import {AxiosInstance} from 'axios';
 import {State} from '../types/state';
-import {Offers} from './types';
+import {Offer, Offers, Comments} from './types';
 import {AuthInfo} from './auth-data';
 import {AuthorizationStatus, SortType} from '../const';
 
@@ -14,6 +14,12 @@ enum ActionType {
   RequireLogout = 'user/requireLogout',
   SetAuthor = 'user/setAuthor',
   RedirectToRoute = 'user/redirectToRoute',
+  LoadOfferById = 'data/loadOfferById',
+  LoadOfferComments = 'data/loadOfferComments',
+  LoadNearOffers = 'data/loadNearOffers',
+  LoadFavouritesOffers = 'data/loadFavouritesOffers',
+  SetFavourite = 'data/favourite',
+  SetFavouriteInOffer = 'data/setFavouriteInOffer',
 }
 
 type ChangeCityAction = {
@@ -56,14 +62,42 @@ type RedirectToRouteAction = {
   payload: string,
 }
 
+type LoadOfferByIdAction = {
+  type: ActionType.LoadOfferById,
+  payload: Offer,
+}
+
+type LoadOfferCommentsAction = {
+  type: ActionType.LoadOfferComments,
+  payload: Comments,
+}
+
+type LoadNearOffersAction = {
+  type: ActionType.LoadNearOffers,
+  payload: Offers,
+}
+
+type LoadFavouritesOffersAction = {
+  type: ActionType.LoadFavouritesOffers,
+  payload: Offers,
+}
+
+type SetFavouriteInOfferAction = {
+  type: ActionType.SetFavouriteInOffer,
+  payload: {id: number, status: boolean},
+}
+
+type SetFavouriteAction = {
+  type: ActionType.SetFavourite,
+  payload: {id: number, status: boolean},
+}
+
 type ThunkActionResult<R = Promise<void>> = ThunkAction<R, State, AxiosInstance, Actions>;
 
 type ThunkAppDispatch = ThunkDispatch<State, AxiosInstance, Actions>;
 
+type Actions = ChangeCityAction | ChangeSortingAction | LoadOffersAction | IsDataLoadedAction | RequireAuthorizationAction | RequireLogoutAction | SetAuthorAction | RedirectToRouteAction | LoadOfferCommentsAction | LoadNearOffersAction | LoadOfferByIdAction | LoadFavouritesOffersAction | SetFavouriteInOfferAction | SetFavouriteAction;
+
 export {ActionType};
 
-export type Actions = ChangeCityAction | ChangeSortingAction | LoadOffersAction | IsDataLoadedAction | RequireAuthorizationAction | RequireLogoutAction | SetAuthorAction | RedirectToRouteAction;
-
-export type {ChangeCityAction, ChangeSortingAction, LoadOffersAction, IsDataLoadedAction, RequireAuthorizationAction, RequireLogoutAction, SetAuthorAction, RedirectToRouteAction};
-
-export type {ThunkActionResult, ThunkAppDispatch};
+export type {Actions, ThunkActionResult, ThunkAppDispatch};

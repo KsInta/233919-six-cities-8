@@ -1,9 +1,7 @@
 import axios, {AxiosInstance, AxiosRequestConfig, AxiosResponse, AxiosError} from 'axios';
 import {UnauthorizedCallback} from './type';
 import {getToken} from './token';
-
-const BACKEND_URL = 'https://8.react.pages.academy/six-cities';
-const REQUEST_TIMEOUT = 5000;
+import {BACKEND_URL, REQUEST_TIMEOUT} from '../const';
 
 enum HttpCode {
   Unauthorized = 401,

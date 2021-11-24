@@ -7,14 +7,10 @@ import PageNotFoundScreen from '../page-not-found-screen/page-not-found-screen';
 import PrivateRoute from '../private-route/private-route';
 import RoomScreen from '../room-screen/room-screen';
 import SignInScreen from '../sign-in-screen/sign-in-screen';
-import {AppRoute, AuthorizationStatus} from '../../const';
-import {AppScreenProps} from './type';
+import {AppRoute} from '../../const';
 import {State} from '../../types/state';
-import {isCheckedAuth} from '../../app';
+import {isCheckedAuth, isAuthenticated} from '../../app';
 import browserHistory from '../../browser-history';
-
-type PropsFromReduxType = ConnectedProps<typeof connector>
-type ConnectedComponentPropsType = PropsFromReduxType & AppScreenProps;
 
 const mapStateToProps = ({offers, authorizationStatus, isDataLoaded}: State) => ({
   authorizationStatus,
@@ -24,7 +20,9 @@ const mapStateToProps = ({offers, authorizationStatus, isDataLoaded}: State) => 
 
 const connector = connect(mapStateToProps);
 
-function App({offers, comments, authorizationStatus, isDataLoaded}: ConnectedComponentPropsType): JSX.Element {
+type PropsFromReduxType = ConnectedProps<typeof connector>
+
+function App({offers, authorizationStatus, isDataLoaded}: PropsFromReduxType): JSX.Element {
 
   if (isCheckedAuth(authorizationStatus) || !isDataLoaded) {
     return (
@@ -38,20 +36,23 @@ function App({offers, comments, authorizationStatus, isDataLoaded}: ConnectedCom
         <Route path={AppRoute.Main} exact>
           <MainScreen />
         </Route>
-        <Route path={AppRoute.Login} exact>
-          <SignInScreen />
-        </Route>
         <Route path={AppRoute.RoomId} exact>
-          <RoomScreen
-            offers={offers}
-            comments={comments}
-            authorizationStatus={AuthorizationStatus.NoAuth}
-          />
+          <RoomScreen />
         </Route>
+        <PrivateRoute
+          path={AppRoute.Login}
+          exact
+          render={() => <SignInScreen />}
+          redirectTo={AppRoute.Main}
+          renderAllowed={!isAuthenticated(authorizationStatus)}
+        >
+        </PrivateRoute>
         <PrivateRoute
           path={AppRoute.Favourites}
           exact
-          render={() => <FavouritesScreen  offers={offers} />}
+          render={() => <FavouritesScreen />}
+          redirectTo={AppRoute.Login}
+          renderAllowed={isAuthenticated(authorizationStatus)}
         >
         </PrivateRoute>
         <Route>

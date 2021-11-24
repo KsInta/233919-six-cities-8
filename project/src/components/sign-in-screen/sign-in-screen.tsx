@@ -1,17 +1,13 @@
-import {Action} from '@reduxjs/toolkit';
-import {useRef, FormEvent, Dispatch} from 'react';
-import {connect, ConnectedProps} from 'react-redux';
 import {Link} from 'react-router-dom';
-import Logo from '../logo/logo';
-import {loginAction} from '../../store/api-actions';
-import {AppRoute} from '../../const';
+import {useRef, FormEvent} from 'react';
+import {connect, ConnectedProps} from 'react-redux';
 import {ThunkAppDispatch} from '../../types/action';
+import Logo from '../logo/logo';
+import {AppRoute, MIN_PASSWORD_LENGTH} from '../../const';
 import {AuthData} from '../../types/auth-data';
+import {loginAction} from '../../store/api-actions';
 
-type LoginPageProosType = {
-};
-
-const mapDispatchToProps = (dispatch: ThunkAppDispatch&Dispatch<Action>) => ({
+const mapDispatchToProps = (dispatch: ThunkAppDispatch) => ({
   onSubmit(authData: AuthData) {
     dispatch(loginAction(authData));
   },
@@ -20,9 +16,8 @@ const mapDispatchToProps = (dispatch: ThunkAppDispatch&Dispatch<Action>) => ({
 const connector = connect(null, mapDispatchToProps);
 
 type PropsFromReduxType = ConnectedProps<typeof connector>;
-type ConnectedComponentPropsType = PropsFromReduxType & LoginPageProosType;
 
-function SignInScreen(props: ConnectedComponentPropsType): JSX.Element {
+function SignInScreen(props: PropsFromReduxType): JSX.Element {
   const {onSubmit} = props;
 
   const loginRef = useRef<HTMLInputElement | null>(null);
@@ -61,7 +56,7 @@ function SignInScreen(props: ConnectedComponentPropsType): JSX.Element {
               </div>
               <div className="login__input-wrapper form__input-wrapper">
                 <label className="visually-hidden">Password</label>
-                <input ref={passwordRef} className="login__input form__input" type="password" name="password" placeholder="Password" required />
+                <input ref={passwordRef} className="login__input form__input" type="password" name="password" placeholder="Password" required minLength={MIN_PASSWORD_LENGTH}/>
               </div>
               <button className="login__submit form__submit button" type="submit">Sign in</button>
             </form>

@@ -1,7 +1,10 @@
 import {ReviewProps} from './type';
 import {numberToPersent} from '../../utils/utils';
 
-function ReviewComponent({comment: {comment, date, rating, user}}: ReviewProps): JSX.Element {
+function ReviewComponent({review}: ReviewProps): JSX.Element {
+
+  const {comment, date, rating, user} = review;
+
   return (
     <li className="reviews__item">
       <div className="reviews__user user">
@@ -15,9 +18,7 @@ function ReviewComponent({comment: {comment, date, rating, user}}: ReviewProps):
       <div className="reviews__info">
         <div className="reviews__rating rating">
           <div className="reviews__stars rating__stars">
-
             <span style={{width: `${numberToPersent(rating)}%`}}></span>
-
             <span className="visually-hidden">Rating</span>
           </div>
         </div>

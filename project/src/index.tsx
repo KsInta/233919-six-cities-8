@@ -6,7 +6,6 @@ import {Provider} from 'react-redux';
 import {composeWithDevTools} from 'redux-devtools-extension';
 import App from './components/app/app';
 import {createAPI} from './services/api';
-import {COMMENTS} from './mocks/comments';
 import {reducer} from './store/reducer';
 import {requireAuthorization} from './store/action';
 import {fetchOffersAction, checkAuthAction} from './store/api-actions';
@@ -35,9 +34,7 @@ ReactDOM.render(
   <React.StrictMode>
     <Provider store = {store}>
       <ToastContainer />
-      <App
-        comments = {COMMENTS}
-      />
+      <App />
     </Provider>
   </React.StrictMode>,
   document.getElementById('root'));

@@ -5,7 +5,7 @@ const comparePriceToHight = (objA:Offer, objB:Offer): number => objA.price-objB.
 const compareRating = (objA:Offer, objB:Offer): number => objB.rating-objA.rating;
 const comparePriceToLow = (objA:Offer, objB:Offer): number => objB.price-objA.price;
 
-export const getSortedOffers = (offers: Offers, sortType: string): Offers => {
+const getSortedOffers = (offers: Offers, sortType: string): Offers => {
   switch (sortType) {
     case SortType.PriceToHight:
       return offers.sort(comparePriceToHight);
@@ -17,3 +17,5 @@ export const getSortedOffers = (offers: Offers, sortType: string): Offers => {
       return offers;
   }
 };
+
+export {getSortedOffers};

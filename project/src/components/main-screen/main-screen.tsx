@@ -1,12 +1,13 @@
 import {useState} from 'react';
 import {connect, ConnectedProps} from 'react-redux';
-import {State} from '../../types/state';
 import CityListComponent from '../city-list-component/city-list-component';
-import HeaderNavComponent from '../header-nav-component/header-nav-component';
-import Logo from '../logo/logo';
+import FooterComponent from '../footer-component/footer-component';
+import HeaderComponent from '../header-component/header-component';
+import MainScreenEmpty from '../main-screen-empty/main-screen-empty';
 import Map from '../map/map';
 import OffersListComponent from '../offers-list-component/offers-list-component';
 import PlacesOptionComponent from '../places-option-component/places-option-component';
+import {State} from '../../types/state';
 import {getCurrentOffers} from '../../utils/utils';
 
 type PropsFromReduxType = ConnectedProps<typeof connector>
@@ -19,23 +20,19 @@ const mapStateToProps = ({city, offers}: State) => ({
 
 const connector = connect(mapStateToProps);
 
-function MainScreen(props: ConnectedComponentPropsType): JSX.Element {
-  const {city, offers} = props;
+function MainScreen({city, offers}: ConnectedComponentPropsType): JSX.Element {
   const [selectedOffer, setSelectedOffer] = useState(0);
   const handleActiveOffer = (id:number):void => {
     setSelectedOffer(id);
   };
 
+  if (!offers.length) {
+    return <MainScreenEmpty />;
+  }
+
   return (
     <div className="page page--gray">
-      <header className="header">
-        <div className="container">
-          <div className="header__wrapper">
-            <Logo />
-            <HeaderNavComponent />
-          </div>
-        </div>
-      </header>
+      <HeaderComponent />
       <main className="page__main page__main--index">
         <h1 className="visually-hidden">Cities</h1>
         <div className="tabs">
@@ -57,6 +54,7 @@ function MainScreen(props: ConnectedComponentPropsType): JSX.Element {
           </div>
         </div>
       </main>
+      <FooterComponent />
     </div>
   );
 }
