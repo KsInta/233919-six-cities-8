@@ -1,6 +1,5 @@
 import {Token} from './type';
-
-const AUTH_TOKEN_KEY_NAME = 'six-xities-token';
+import {AUTH_TOKEN_KEY_NAME} from '../const';
 
 const getToken = (): Token => {
   const token = localStorage.getItem(AUTH_TOKEN_KEY_NAME);

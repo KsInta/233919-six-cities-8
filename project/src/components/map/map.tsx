@@ -34,7 +34,7 @@ function Map({city, offers, selectedOffer, mapHeigth}: MapProps): JSX.Element {
         });
 
         marker
-          .setIcon(selectedOffer !== undefined && offer.id === selectedOffer ? activetCustomIcon: defaultCustomIcon)
+          .setIcon(selectedOffer !== undefined && offer.id === selectedOffer ? activetCustomIcon : defaultCustomIcon)
           .addTo(map);
         return marker;
       });

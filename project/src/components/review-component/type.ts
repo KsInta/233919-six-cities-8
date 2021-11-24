@@ -1,7 +1,7 @@
-import {Comment} from '../../types/types';
+import {Review} from '../../types/types';
 
 type ReviewProps = {
-  comment: Comment,
+  review: Review,
 }
 
 export type {ReviewProps};

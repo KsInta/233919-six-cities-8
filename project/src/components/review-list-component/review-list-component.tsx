@@ -1,12 +1,13 @@
 import ReviewComponent from '../review-component/review-component';
 import {ReviewListProps} from './type';
+import {getActualReviews} from '../../utils/utils';
 
-function ReviewListComponent(props: ReviewListProps): JSX.Element {
-  const {comments} = props;
+function ReviewListComponent({reviews}: ReviewListProps): JSX.Element {
+  const actualReviews = getActualReviews(reviews);
 
   return (
     <ul className="reviews__list">
-      {comments.map((comment) => <ReviewComponent comment={comment} key={comment.id}/>)}
+      {actualReviews.map((comment) => <ReviewComponent review={comment} key={comment.id}/>)}
     </ul>
   );
 }

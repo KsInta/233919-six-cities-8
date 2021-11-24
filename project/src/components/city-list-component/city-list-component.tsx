@@ -4,14 +4,11 @@ import {connect, ConnectedProps} from 'react-redux';
 import {changeCity} from '../../store/action';
 import {State} from '../../types/state';
 import {Actions} from '../../types/action';
-import {CITIES} from '../../const';
+import {cities} from '../../const';
 
 const mapStateToProps = ({city}: State) => ({
   city,
 });
-
-type PropsFromReduxType = ConnectedProps<typeof connector>;
-type ConnectedComponentPropsType = PropsFromReduxType;
 
 const mapDispatchToProps = (dispatch: Dispatch<Actions>) => ({
   onCityChange(cityName: string) {
@@ -21,12 +18,13 @@ const mapDispatchToProps = (dispatch: Dispatch<Actions>) => ({
 
 const connector = connect(mapStateToProps, mapDispatchToProps);
 
-function CityListComponent(props: ConnectedComponentPropsType): JSX.Element {
-  const {city, onCityChange}=props;
+type PropsFromReduxType = ConnectedProps<typeof connector>;
+
+function CityListComponent({city, onCityChange}: PropsFromReduxType): JSX.Element {
 
   return (
     <ul className="locations__list tabs__list">
-      {CITIES.map((item) => (
+      {cities.map((item) => (
         <li key={item} className="locations__item">
           <Link className={`locations__item-link tabs__item ${(city===item)&&'tabs__item--active'}`}
             onClick = {(evt)=>{

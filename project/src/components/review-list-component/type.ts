@@ -1,7 +1,7 @@
 import {Comments} from '../../types/types';
 
 type ReviewListProps = {
-  comments: Comments,
+  reviews: Comments,
 }
 
 export type {ReviewListProps};

@@ -1,7 +1,6 @@
-import {Dispatch} from '@reduxjs/toolkit';
 import {useEffect, useState} from 'react';
 import {connect, ConnectedProps} from 'react-redux';
-import {Actions} from '../../types/action';
+import {ThunkAppDispatch} from '../../types/action';
 import {SortType} from '../../const';
 import {State} from '../../types/state';
 import {changeSorting} from '../../store/action';
@@ -15,7 +14,7 @@ const mapStateToProps = ({city, offers, sortType}: State) => ({
   sortType,
 });
 
-const mapDispatchToProps = (dispatch: Dispatch<Actions>) => ({
+const mapDispatchToProps = (dispatch: ThunkAppDispatch) => ({
   onSortChange(sortType: SortType) {
     dispatch(changeSorting(sortType));
   },
@@ -24,9 +23,7 @@ const mapDispatchToProps = (dispatch: Dispatch<Actions>) => ({
 
 const connector = connect(mapStateToProps, mapDispatchToProps);
 
-function PlacesOptionComponent (props: ConnectedComponentPropsType): JSX.Element {
-  const {sortType, city, onSortChange} = props;
-  const SortTypes = Object.values(SortType);
+function PlacesOptionComponent ({sortType, city, onSortChange}: ConnectedComponentPropsType): JSX.Element {
   const [isOpened, setIsOpened] = useState(false);
   useEffect(() => {
     setIsOpened(false);
@@ -43,7 +40,7 @@ function PlacesOptionComponent (props: ConnectedComponentPropsType): JSX.Element
       </span>
       <ul className={`places__options places__options--custom ${isOpened&&'places__options--opened'}`}>
         {
-          SortTypes.map((item) => (
+          Object.values(SortType).map((item) => (
             <li key ={item}
               className={`places__option ${(item===sortType)&&'places__option--active'}`}
               tabIndex={0}

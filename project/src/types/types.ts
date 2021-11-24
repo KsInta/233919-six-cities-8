@@ -1,23 +1,19 @@
-type User = {
+type Host = {
   avatarUrl: string,
-  id: number,
+  id: number;
   isPro: boolean,
   name: string,
 }
 
 type Comment = {
   comment: string,
-  date: string,
-  id: number,
   rating: number,
-  user: User,
 }
 
-type Host = {
-  avatarUrl: string,
+type Review = Comment & {
   id: number;
-  isPro: boolean,
-  name: string,
+  date: string;
+  user: Host;
 }
 
 type Location = {
@@ -65,8 +61,12 @@ type ServerOffer = Omit<Offer, 'host'|'isFavorite'|'isPremium'|'maxAdults'|'prev
   'preview_image': string;
 }
 
-type Comments = Comment[];
+type ServerReview = Omit<Review, 'user'>&{
+  user: ServerHost;
+};
+
+type Comments = Review[];
 
 type Offers = Offer[];
 
-export type {Host, Offer, Offers, Comment, Comments, City, ServerHost, ServerOffer};
+export type {Host, Offer, Offers, Review, Comments, City, ServerHost, ServerOffer, ServerReview};

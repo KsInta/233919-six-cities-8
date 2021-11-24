@@ -1,5 +1,5 @@
-import {Host, Offer, ServerHost, ServerOffer} from '../types/types';
 import {AuthInfo, ServerAuthInfo} from '../types/auth-data';
+import {Host, Offer, Review, ServerHost, ServerOffer, ServerReview} from '../types/types';
 
 const adaptHostToClient = (host: ServerHost): Host => {
   const {'is_pro': isPro, 'avatar_url': avatarUrl, ...restUser} = host;
@@ -32,6 +32,14 @@ const adaptAuthInfoToClient = (authInfo: ServerAuthInfo): AuthInfo => {
   };
 };
 
+const adaptReviewToClient = (review: ServerReview) : Review => {
+  const {user, ...rest}=review;
+  return {
+    ...rest,
+    user: adaptHostToClient(user),
+  };
+};
+
 const adaptOfferToServer = (offer: Offer) : ServerOffer => {
   const {isPro, avatarUrl, ...restHost} = offer.host;
   const adaptedHost: ServerHost = {
@@ -50,4 +58,4 @@ const adaptOfferToServer = (offer: Offer) : ServerOffer => {
   };
 };
 
-export {adaptOfferToClient, adaptOfferToServer, adaptAuthInfoToClient};
+export {adaptOfferToClient, adaptOfferToServer, adaptAuthInfoToClient, adaptReviewToClient};

@@ -10,10 +10,10 @@ const mapStateToProps = ({sortType, city}: State) => ({
   city,
 });
 
+const connector = connect(mapStateToProps);
+
 type PropsFromReduxType = ConnectedProps<typeof connector>
 type ConnectedComponentPropsType = PropsFromReduxType & OffersListProps;
-
-const connector = connect(mapStateToProps);
 
 function OffersListComponent({offers, onListItemHover, city, sortType} : ConnectedComponentPropsType): JSX.Element {
   offers = getCurrentOffers(offers, city);
