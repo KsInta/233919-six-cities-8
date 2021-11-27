@@ -10,9 +10,10 @@ import {State} from '../../types/state';
 import {AppRoute} from '../../const';
 import {fetchSetFavouriteAction, fetchFavouriteOffersAction} from '../../store/api-actions';
 import {numberToPersent} from '../../utils/utils';
+import {getFavouriteOffers} from '../../store/app-data/selectors';
 
-const mapStateToProps = ({favouriteOffers}: State) => ({
-  favouriteOffers,
+const mapStateToProps = (state: State) => ({
+  favouriteOffers: getFavouriteOffers(state),
 });
 
 const mapDispatchToProps = (dispatch: ThunkAppDispatch) => ({

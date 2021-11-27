@@ -9,18 +9,19 @@ import OffersListComponent from '../offers-list-component/offers-list-component'
 import PlacesOptionComponent from '../places-option-component/places-option-component';
 import {State} from '../../types/state';
 import {getCurrentOffers} from '../../utils/utils';
+import {getActiveCity} from '../../store/option-process/selectors';
+import {getOffers} from '../../store/app-data/selectors';
 
-type PropsFromReduxType = ConnectedProps<typeof connector>
-type ConnectedComponentPropsType = PropsFromReduxType;
-
-const mapStateToProps = ({city, offers}: State) => ({
-  city,
-  offers,
+const mapStateToProps = (state: State) => ({
+  city: getActiveCity(state),
+  offers: getOffers(state),
 });
 
 const connector = connect(mapStateToProps);
 
-function MainScreen({city, offers}: ConnectedComponentPropsType): JSX.Element {
+type PropsFromReduxType = ConnectedProps<typeof connector>;
+
+function MainScreen({city, offers}: PropsFromReduxType): JSX.Element {
   const [selectedOffer, setSelectedOffer] = useState(0);
   const handleActiveOffer = (id:number):void => {
     setSelectedOffer(id);

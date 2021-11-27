@@ -1,11 +1,12 @@
 import {Link} from 'react-router-dom';
-import {useRef, FormEvent} from 'react';
+import {useState, FormEvent, ChangeEvent} from 'react';
 import {connect, ConnectedProps} from 'react-redux';
 import {ThunkAppDispatch} from '../../types/action';
 import Logo from '../logo/logo';
 import {AppRoute, MIN_PASSWORD_LENGTH} from '../../const';
 import {AuthData} from '../../types/auth-data';
 import {loginAction} from '../../store/api-actions';
+import {InputSignInFormProps} from './type';
 
 const mapDispatchToProps = (dispatch: ThunkAppDispatch) => ({
   onSubmit(authData: AuthData) {
@@ -16,22 +17,45 @@ const mapDispatchToProps = (dispatch: ThunkAppDispatch) => ({
 const connector = connect(null, mapDispatchToProps);
 
 type PropsFromReduxType = ConnectedProps<typeof connector>;
+type ConnectedComponentPropsType = PropsFromReduxType & InputSignInFormProps;
 
-function SignInScreen(props: PropsFromReduxType): JSX.Element {
+function SignInScreen(props: ConnectedComponentPropsType): JSX.Element {
   const {onSubmit} = props;
 
-  const loginRef = useRef<HTMLInputElement | null>(null);
-  const passwordRef = useRef<HTMLInputElement | null>(null);
+  const [formState, setFormState] = useState<InputSignInFormProps>({
+    email: {
+      value: '',
+      isValid: false,
+      regex: '^[a-zA-Z0-9._:$!%-]+@[a-zA-Z0-9.-]+.+.[a-zA-Z]{2,4}$',
+    },
+    password: {
+      value: '',
+      isValid: false,
+      regex: '(?=.*[A-Za-zа-яА-Я])(?=.*[0-9])[A-Za-zа-яА-Я0-9]+',
+    },
+  });
 
   const handleSubmit = (evt: FormEvent<HTMLFormElement>) => {
     evt.preventDefault();
 
-    if (loginRef.current !== null && passwordRef.current !== null) {
-      onSubmit({
-        email: loginRef.current.value,
-        password: passwordRef.current.value,
-      });
-    }
+    onSubmit({
+      email: formState.email.value,
+      password: formState.password.value,
+    });
+  };
+
+  const handleChange = ({target: {name, value}}: ChangeEvent<HTMLInputElement>) => {
+    const regExp = new RegExp(formState[name].regex);
+    const isValid = regExp.test(value);
+
+    setFormState({
+      ...formState,
+      [name]: {
+        ...formState[name],
+        value,
+        isValid,
+      },
+    });
   };
 
   return (
@@ -52,13 +76,13 @@ function SignInScreen(props: PropsFromReduxType): JSX.Element {
             <form className="login__form form" action="#" method="post" onSubmit={handleSubmit}>
               <div className="login__input-wrapper form__input-wrapper">
                 <label className="visually-hidden">E-mail</label>
-                <input ref={loginRef} className="login__input form__input" type="email" name="email" placeholder="Email" required />
+                <input onChange={handleChange} className="login__input form__input" type="email" name="email" placeholder="Email" required />
               </div>
               <div className="login__input-wrapper form__input-wrapper">
                 <label className="visually-hidden">Password</label>
-                <input ref={passwordRef} className="login__input form__input" type="password" name="password" placeholder="Password" required minLength={MIN_PASSWORD_LENGTH}/>
+                <input onChange={handleChange} className="login__input form__input" type="password" name="password" placeholder="Password" required minLength={MIN_PASSWORD_LENGTH}/>
               </div>
-              <button className="login__submit form__submit button" type="submit">Sign in</button>
+              <button disabled={!formState.email.isValid || !formState.password.isValid} className="login__submit form__submit button" type="submit">Sign in</button>
             </form>
           </section>
           <section className="locations locations--login locations--current">

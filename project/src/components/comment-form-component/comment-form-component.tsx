@@ -4,10 +4,11 @@ import {ThunkAppDispatch} from '../../types/action';
 import {connect, ConnectedProps} from 'react-redux';
 import {State} from '../../types/state';
 import {postCommentsAction} from '../../store/api-actions';
-import {ReviewSetting, RatingStar} from '../../const';
+import {ReviewSetting, RatingStar, REVIEW_FIELD_NAME} from '../../const';
+import {getCurrentOffer} from '../../store/app-data/selectors';
 
-const mapStateToProps = ({offer}: State) => ({
-  offer,
+const mapStateToProps = (state: State) => ({
+  offer: getCurrentOffer(state),
 });
 
 const mapDispatchToProps = (dispatch: ThunkAppDispatch) => ({
@@ -65,7 +66,7 @@ function CommentFormComponent({offer, onSubmit}: PropsFromReduxType): JSX.Elemen
   const handleChange = ({target: {name, value}}: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
 
     let isValid;
-    if (name === 'review') {
+    if (name === REVIEW_FIELD_NAME) {
       isValid = Boolean(value.length >= ReviewSetting.Min && value.length <= ReviewSetting.Max);
     } else {
       isValid = true;

@@ -4,10 +4,11 @@ import {OffersListProps} from './type';
 import {State} from '../../types/state';
 import {getCurrentOffers} from '../../utils/utils';
 import {getSortedOffers} from '../../sorting';
+import {getActiveCity, getSorting} from '../../store/option-process/selectors';
 
-const mapStateToProps = ({sortType, city}: State) => ({
-  sortType,
-  city,
+const mapStateToProps = (state: State) => ({
+  sortType: getSorting(state),
+  city: getActiveCity(state),
 });
 
 const connector = connect(mapStateToProps);

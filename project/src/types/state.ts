@@ -1,18 +1,27 @@
 import {Offer, Offers, Comments} from './types';
 import {AuthorizationStatus, SortType} from '../const';
 import {AuthInfo} from './auth-data';
+import {RootState} from '../store/root-reducer';
 
-type State = {
+type OptionProcess = {
   city: string,
+  sortType: SortType,
+}
+
+type AppData = {
   offers: Offers,
   offer: Offer,
   nearOffers: Offers,
   reviews: Comments,
   favouriteOffers: Offers,
-  sortType: SortType;
-  authorizationStatus: AuthorizationStatus,
-  author: AuthInfo;
   isDataLoaded: boolean,
 }
 
-export type {State};
+type UserProcess = {
+  authorizationStatus: AuthorizationStatus,
+  author: AuthInfo,
+}
+
+type State = RootState;
+
+export type {State, OptionProcess, AppData, UserProcess};

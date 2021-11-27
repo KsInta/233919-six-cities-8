@@ -1,28 +1,18 @@
-import {ActionType, Actions} from '../types/action';
-import {AuthorizationStatus, SortType, cities} from '../const';
-import {AuthInfo} from '../types/auth-data';
-import {State} from '../types/state';
-import {Offer} from '../types/types';
+import {ActionType, Actions} from '../../types/action';
+import {AppData} from '../../types/state';
+import {Offer} from '../../types/types';
 
-const initialState = {
-  city: cities[0],
+const initialState: AppData = {
   offers: [],
   offer: {} as Offer,
   nearOffers: [],
   reviews: [],
   favouriteOffers: [],
-  sortType: SortType.Popular,
-  authorizationStatus: AuthorizationStatus.Unknown,
-  author: {} as AuthInfo,
   isDataLoaded: false,
 };
 
-const reducer = (state: State = initialState, action: Actions): State => {
+const appData = (state = initialState, action: Actions): AppData => {
   switch (action.type) {
-    case ActionType.ChangeCity:
-      return {...state, city: action.payload};
-    case ActionType.ChangeSorting:
-      return {...state, sortType: action.payload};
     case ActionType.LoadOffers:
       return {...state, offers: action.payload};
     case ActionType.LoadOfferById:
@@ -35,12 +25,6 @@ const reducer = (state: State = initialState, action: Actions): State => {
       return {...state, favouriteOffers: action.payload};
     case ActionType.IsDataLoaded:
       return {...state, isDataLoaded: action.payload};
-    case ActionType.RequireAuthorization:
-      return {...state, authorizationStatus: action.payload};
-    case ActionType.RequireLogout:
-      return {...state, authorizationStatus: AuthorizationStatus.NoAuth, author: {} as AuthInfo};
-    case ActionType.SetAuthor:
-      return {...state, author: action.payload};
     case ActionType.SetFavourite:
       return {
         ...state, offers: state.offers.map((offer) => {
@@ -61,4 +45,4 @@ const reducer = (state: State = initialState, action: Actions): State => {
   }
 };
 
-export {reducer};
+export {appData};

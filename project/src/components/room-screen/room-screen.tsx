@@ -15,13 +15,15 @@ import {AuthorizationStatus} from '../../const';
 import {State} from '../../types/state';
 import {numberToPersent} from '../../utils/utils';
 import {fetchCommentsAction, fetchNearOffersAction, fetchOfferByIdAction, fetchSetFavouriteAction} from '../../store/api-actions';
+import {getOffers, getCurrentOffer, getReviews, getNearOffers} from '../../store/app-data/selectors';
+import {getAuthorizationStatus} from '../../store/user-process/selectors';
 
-const mapStateToProps = ({offer, offers, reviews, nearOffers, authorizationStatus}: State) => ({
-  offer,
-  offers,
-  reviews,
-  nearOffers,
-  authorizationStatus,
+const mapStateToProps = (state: State) => ({
+  offer: getCurrentOffer(state),
+  offers: getOffers(state),
+  reviews: getReviews(state),
+  nearOffers: getNearOffers(state),
+  authorizationStatus: getAuthorizationStatus(state),
 });
 
 const mapDispatchToProps = (dispatch: ThunkAppDispatch) => ({

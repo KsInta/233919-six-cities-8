@@ -30,7 +30,9 @@ const RatingStar = [
 ];
 
 const enum InformationMessages {
+  AuthFail = 'Ошибка авторизации, возможно, неправильный email или пароль',
   DataLoadingError = 'Ошибка загрузки данных',
+  AuthNo = 'Не забудьте авторизоваться',
 }
 
 const enum ReviewSetting {
@@ -71,4 +73,6 @@ const MAX_RATING = 5;
 
 const MAX_RATING_IN_PERCENTS = 100;
 
-export {AppRoute, APIRoute, AuthorizationStatus, SortType, InformationMessages, ReviewSetting, RatingStar, cities, URL_MARKER_DEFAULT, URL_MARKER_ACTIVE, MIN_PASSWORD_LENGTH, BACKEND_URL, REQUEST_TIMEOUT, AUTH_TOKEN_KEY_NAME, MAX_RATING, MAX_RATING_IN_PERCENTS};
+const REVIEW_FIELD_NAME = 'review';
+
+export {AppRoute, APIRoute, AuthorizationStatus, SortType, InformationMessages, ReviewSetting, RatingStar, cities, URL_MARKER_DEFAULT, URL_MARKER_ACTIVE, MIN_PASSWORD_LENGTH, BACKEND_URL, REQUEST_TIMEOUT, AUTH_TOKEN_KEY_NAME, MAX_RATING, MAX_RATING_IN_PERCENTS, REVIEW_FIELD_NAME};

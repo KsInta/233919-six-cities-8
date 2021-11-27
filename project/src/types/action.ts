@@ -6,7 +6,7 @@ import {AuthInfo} from './auth-data';
 import {AuthorizationStatus, SortType} from '../const';
 
 enum ActionType {
-  ChangeCity = 'app/changeCity',
+  ChangeCity = 'option/changeCity',
   ChangeSorting = 'option/changeSorting',
   LoadOffers = 'data/loadOffers',
   IsDataLoaded = 'data/isLoading',

@@ -5,9 +5,10 @@ import {changeCity} from '../../store/action';
 import {State} from '../../types/state';
 import {Actions} from '../../types/action';
 import {cities} from '../../const';
+import {getActiveCity} from '../../store/option-process/selectors';
 
-const mapStateToProps = ({city}: State) => ({
-  city,
+const mapStateToProps = (state: State) => ({
+  city: getActiveCity(state),
 });
 
 const mapDispatchToProps = (dispatch: Dispatch<Actions>) => ({

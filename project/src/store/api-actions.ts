@@ -1,12 +1,12 @@
-import {AxiosError} from 'axios';
 import {ThunkActionResult} from '../types/action';
 import {loadOffers, toggleIsLoading, requireAuthorization, requireLogout, setAuthor, redirectToRoute, loadOfferComments, loadNearOffers, loadOfferById, setFavouriteInOffer, loadFavouriteOffers, setFavourite} from './action';
 import {saveToken, dropToken} from '../services/token';
-import {adaptOfferToClient, adaptAuthInfoToClient, adaptReviewToClient} from '../services/adapter';
+import {adaptOfferToClient, adaptReviewToClient} from '../services/adapter';
 import {toast} from 'react-toastify';
 import {AppRoute, APIRoute, AuthorizationStatus, InformationMessages} from '../const';
 import {ServerOffer} from '../types/types';
-import {AuthData, ServerAuthInfo} from '../types/auth-data';
+import {AuthData} from '../types/auth-data';
+import {NameSpace} from './root-reducer';
 
 const fetchOffersAction = (): ThunkActionResult =>
   async (dispatch, _getState, api): Promise<void> => {
@@ -23,27 +23,27 @@ const fetchOffersAction = (): ThunkActionResult =>
 
 const checkAuthAction = (): ThunkActionResult =>
   async (dispatch, _getState, api) => {
-    await api.get<ServerAuthInfo>(APIRoute.Login)
-      .then((response) => {
-        const author = adaptAuthInfoToClient(response.data);
-        saveToken(author.token);
-        dispatch(requireAuthorization(AuthorizationStatus.Auth));
-        dispatch(setAuthor(author));
-      })
-      .catch((err: AxiosError) => toast.error(err.response?.status));
+    try {
+      const {data} = await api.get(APIRoute.Login);
+      saveToken(data.token);
+      dispatch(requireAuthorization(AuthorizationStatus.Auth));
+      dispatch(setAuthor(data));
+    } catch {
+      toast.info(InformationMessages.AuthNo);
+    }
   };
 
-const loginAction = (authData: AuthData): ThunkActionResult =>
+const loginAction = ({email, password}: AuthData): ThunkActionResult =>
   async (dispatch, _getState, api) => {
-    await api.post<ServerAuthInfo>(APIRoute.Login, authData)
-      .then((response) => {
-        const author = adaptAuthInfoToClient(response.data);
-        saveToken(author.token);
-        dispatch(requireAuthorization(AuthorizationStatus.Auth));
-        dispatch(setAuthor(author));
-        dispatch(redirectToRoute(AppRoute.Main));
-      })
-      .catch((err: AxiosError) => toast.error(err.response?.status));
+    try {
+      const {data} = await api.post(APIRoute.Login, {email, password});
+      saveToken(data.token);
+      dispatch(requireAuthorization(AuthorizationStatus.Auth));
+      dispatch(setAuthor(data));
+      dispatch(redirectToRoute(AppRoute.Main));
+    } catch {
+      toast.error(InformationMessages.AuthFail);
+    }
   };
 
 const logoutAction = (): ThunkActionResult =>
@@ -98,7 +98,7 @@ export const postCommentsAction = ({id, rating, comment}: { id: string, rating: 
 
 const fetchSetFavouriteAction = (id: number, status: boolean): ThunkActionResult =>
   async (dispatch, getState, api) => {
-    if (getState().authorizationStatus === AuthorizationStatus.Auth) {
+    if (getState()[NameSpace.user].authorizationStatus === AuthorizationStatus.Auth) {
       try {
         await api.post(`${APIRoute.Favourite}/${id}/${Number(status)}`);
         dispatch(setFavourite(id, status));

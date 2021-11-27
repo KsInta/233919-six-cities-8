@@ -11,11 +11,13 @@ import {AppRoute} from '../../const';
 import {State} from '../../types/state';
 import {isCheckedAuth, isAuthenticated} from '../../app';
 import browserHistory from '../../browser-history';
+import {getDataLoaded, getOffers} from '../../store/app-data/selectors';
+import {getAuthorizationStatus} from '../../store/user-process/selectors';
 
-const mapStateToProps = ({offers, authorizationStatus, isDataLoaded}: State) => ({
-  authorizationStatus,
-  isDataLoaded,
-  offers,
+const mapStateToProps = (state: State) => ({
+  authorizationStatus: getAuthorizationStatus(state),
+  isDataLoaded: getDataLoaded(state),
+  offers: getOffers(state),
 });
 
 const connector = connect(mapStateToProps);

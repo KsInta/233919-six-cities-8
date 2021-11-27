@@ -4,14 +4,13 @@ import {ThunkAppDispatch} from '../../types/action';
 import {SortType} from '../../const';
 import {State} from '../../types/state';
 import {changeSorting} from '../../store/action';
+import {getOffers} from '../../store/app-data/selectors';
+import {getActiveCity, getSorting} from '../../store/option-process/selectors';
 
-type PropsFromReduxType = ConnectedProps<typeof connector>
-type ConnectedComponentPropsType = PropsFromReduxType;
-
-const mapStateToProps = ({city, offers, sortType}: State) => ({
-  city,
-  offers,
-  sortType,
+const mapStateToProps = (state: State) => ({
+  city: getActiveCity(state),
+  offers: getOffers(state),
+  sortType: getSorting(state),
 });
 
 const mapDispatchToProps = (dispatch: ThunkAppDispatch) => ({
@@ -20,10 +19,11 @@ const mapDispatchToProps = (dispatch: ThunkAppDispatch) => ({
   },
 });
 
-
 const connector = connect(mapStateToProps, mapDispatchToProps);
 
-function PlacesOptionComponent ({sortType, city, onSortChange}: ConnectedComponentPropsType): JSX.Element {
+type PropsFromReduxType = ConnectedProps<typeof connector>
+
+function PlacesOptionComponent ({sortType, city, onSortChange}: PropsFromReduxType): JSX.Element {
   const [isOpened, setIsOpened] = useState(false);
   useEffect(() => {
     setIsOpened(false);
